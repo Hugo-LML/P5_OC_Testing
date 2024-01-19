@@ -6,18 +6,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.openclassrooms.starterjwt.models.Teacher;
 import com.openclassrooms.starterjwt.repository.TeacherRepository;
 
-public class TeacherServiceTest {
+@SpringBootTest
+public class TeacherServiceUnitTest {
   
   @Mock
   private TeacherRepository teacherRepository;
@@ -33,15 +34,15 @@ public class TeacherServiceTest {
         .id(123L)
         .lastName("Doe")
         .firstName("John")
-        .createdAt(LocalDateTime.now())
-        .updatedAt(LocalDateTime.now())
+        .createdAt(null)
+        .updatedAt(null)
         .build(),
       Teacher.builder()
         .id(456L)
         .lastName("Doey")
         .firstName("Johnny")
-        .createdAt(LocalDateTime.now())
-        .updatedAt(LocalDateTime.now())
+        .createdAt(null)
+        .updatedAt(null)
         .build()
     );
     when(teacherRepository.findAll()).thenReturn(expectedTeachers);
@@ -59,14 +60,13 @@ public class TeacherServiceTest {
   public void testFindTeacherById() {
     // Arrange
     Long teacherIdToFind = 123L;
-    Teacher expectedTeacher = 
-      Teacher.builder()
-        .id(123L)
-        .lastName("Doe")
-        .firstName("John")
-        .createdAt(LocalDateTime.now())
-        .updatedAt(LocalDateTime.now())
-        .build();
+    Teacher expectedTeacher = Teacher.builder()
+      .id(123L)
+      .lastName("Doe")
+      .firstName("John")
+      .createdAt(null)
+      .updatedAt(null)
+      .build();
     when(teacherRepository.findById(teacherIdToFind)).thenReturn(Optional.of(expectedTeacher));
 
     // Act
@@ -75,6 +75,7 @@ public class TeacherServiceTest {
     // Assert
     assertNotNull(actualTeacher);
     assertSame(expectedTeacher, actualTeacher);
+    assertEquals(teacherIdToFind, actualTeacher.getId());
   }
 
 }
