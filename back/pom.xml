@@ -15,10 +15,6 @@
 	<name>yoga-app</name>
 	<description>The best backend for an Yoga app !</description>
 
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -41,9 +37,17 @@
 		</dependency>
 
 		<dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+			<version>2.2.224</version>
+   </dependency>
+
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
+			<version>8.0.33</version>
 		</dependency>
 
 		<dependency>
@@ -68,6 +72,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+						<version>1.18.30</version>
         </dependency>
 
 		<dependency>
@@ -104,7 +109,16 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
+				<version>0.8.11</version>
+				<configuration>
+					<excludes>
+						<exclude>/com/openclassrooms/starterjwt/dto/**</exclude>
+						<exclude>/com/openclassrooms/starterjwt/models/**</exclude>
+						<exclude>/com/openclassrooms/starterjwt/mapper/**</exclude>
+						<exclude>/com/openclassrooms/starterjwt/payload/request/**</exclude>
+						<exclude>/com/openclassrooms/starterjwt/payload/response/**</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
