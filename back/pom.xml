@@ -40,12 +40,14 @@
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>runtime</scope>
+			<version>2.2.224</version>
    </dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
+			<version>8.0.33</version>
 		</dependency>
 
 		<dependency>
@@ -114,6 +116,7 @@
 						<exclude>/com/openclassrooms/starterjwt/models/**</exclude>
 						<exclude>/com/openclassrooms/starterjwt/mapper/**</exclude>
 						<exclude>/com/openclassrooms/starterjwt/payload/request/**</exclude>
+						<exclude>/com/openclassrooms/starterjwt/payload/response/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
@@ -144,6 +147,7 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
+											<minimum>0.9</minimum>
 										</limit>
 									</limits>
 								</rule>
