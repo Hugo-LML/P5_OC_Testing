@@ -1,5 +1,6 @@
+/// <reference types="cypress" />
 describe('Login spec', () => {
-  it('Login successfull', () => {
+  it('should login successfully', () => {
     cy.visit('/login')
 
     cy.intercept('POST', '/api/auth/login', {
