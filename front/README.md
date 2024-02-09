@@ -1,72 +1,69 @@
-# Yoga
+# P5_OC_Testing
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
+This project is the fifth of the OpenClassrooms full stack developer formation. Its goal is to learn unitary, integration and functional tests for the back, as for the front (Java / Angular).
 
-## Start the project
+## Prerequisites
 
-Git clone:
+- MySQL >= 8
+- Angular >= 14.1.0
+- Java >= 8
+- Maven
 
-> git clone https://github.com/OpenClassrooms-Student-Center/P5-Full-Stack-testing
+## Create the DB
 
-Go inside folder:
+1. Copy the SQL script located in ./resources/sql/script.sql
+2. Import it inside your MySQL shell
+3. In the ./back/src/main/resources/application.properties file, replace the followings by your informations:
+- spring.datasource.url=jdbc:mysql://localhost:3306/test?allowPublicKeyRetrieval=true
+- spring.datasource.username=user
+- spring.datasource.password=123456
 
-> cd yoga
-
-Install dependencies:
-
-> npm install
-
-Launch Front-end:
-
-> npm run start;
-
-
-## Ressources
-
-### Mockoon env 
-
-### Postman collection
-
-For Postman import the collection
-
-> ressources/postman/yoga.postman_collection.json 
-
-by following the documentation: 
-
-https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman
-
-
-### MySQL
-
-SQL script for creating the schema is available `ressources/sql/script.sql`
-
-By default the admin account is:
+Here are the credentials of the default admin account:
 - login: yoga@studio.com
 - password: test!1234
 
+## Start the project
 
-### Test
+Clone the repository:
+- `git clone https://github.com/Hugo-LML/P5_OC_Testing.git`
+
+### Back
+
+Open a terminal in the back folder and run:
+- `mvn clean install`
+- `mvn spring-boot:run`
+
+### Front
+
+Open a terminal in the front folder and run:
+- `npm install`
+- `npm run start`
+
+### Tests
+
+#### Back
+
+To launch all back tests, run the following command:
+-  `mvn test`
+
+To generate the report, run the following command:
+- `mvn jacoco:report`
+
+To see the test coverage, go to this url:
+- `back/target/site/jacoco/index.html`
+
+#### Front
+
+To launch all front tests, run the following command:
+-  `npm run test`
+
+To see the test coverage, run the following command:
+- `npm run test:coverage`
 
 #### E2E
 
-Launching e2e test:
+To launch all front end to end tests, run the following command:
+-  `npm run e2e`
 
-> npm run e2e
-
-Generate coverage report (you should launch e2e test before):
-
-> npm run e2e:coverage
-
-Report is available here:
-
-> front/coverage/lcov-report/index.html
-
-#### Unitary test
-
-Launching test:
-
-> npm run test
-
-for following change:
-
-> npm run test:watch
+To see the test coverage, run the following command:
+- `npm run e2e:coverage`
