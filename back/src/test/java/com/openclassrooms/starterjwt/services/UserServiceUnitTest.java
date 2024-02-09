@@ -27,44 +27,6 @@ public class UserServiceUnitTest {
     MockitoAnnotations.openMocks(this);
   }
 
-  // @Test
-  // public void testDeleteUser() {
-  //   // Arrange
-  //   Long userIdToDelete = 123L;
-  //   when(userRepository.existsById(userIdToDelete)).thenReturn(true);
-
-  //   // Act
-  //   userService.delete(userIdToDelete);
-
-  //   // Assert
-  //   verify(userRepository, times(1)).deleteById(userIdToDelete);
-  // }
-
-  // @Test
-  // public void testFindUserById() {
-  //   // Arrange
-  //   Long userIdToFind = 123L;
-  //   User expectedUser = User.builder()
-  //     .id(123L)
-  //     .email("user123@gmail.com")
-  //     .lastName("Doe")
-  //     .firstName("John")
-  //     .password("test123")
-  //     .admin(false)
-  //     .createdAt(null)
-  //     .updatedAt(null)
-  //     .build();
-  //   when(userRepository.findById(userIdToFind)).thenReturn(Optional.of(expectedUser));
-
-  //   // Act
-  //   User actualUser = userService.findById(userIdToFind);
-
-  //   // Assert
-  //   assertNotNull(actualUser);
-  //   assertSame(expectedUser, actualUser);
-  //   assertEquals(userIdToFind, actualUser.getId());
-  // }
-
   @Test
   public void testFindUserByIdNotFound() {
     // Arrange
