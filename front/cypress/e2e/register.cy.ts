@@ -4,21 +4,17 @@ describe('Register spec', () => {
   });
 
   it('should register successfully', () => {
-    // Intercept the registration request
     cy.intercept('POST', '/api/auth/register', {
       statusCode: 200,
     }).as('register');
 
-    // Fill out the registration form
     cy.get('input[formControlName=firstName]').type("John");
     cy.get('input[formControlName=lastName]').type("Doe");
     cy.get('input[formControlName=email]').type("test@example.com");
     cy.get('input[formControlName=password]').type(`${"test123"}{enter}{enter}`);
 
-    // Wait for the registration request to complete
     cy.wait('@register');
 
-    // Assert that the URL includes '/login' after successful registration
     cy.url().should('include', '/login');
   });
 
@@ -32,7 +28,6 @@ describe('Register spec', () => {
   })
 
   it('should handle registration error (eg: email already used)', () => {
-    // Intercept the registration request with an error response
     cy.intercept('POST', '/api/auth/register', {
       statusCode: 500,
       body: {
@@ -40,16 +35,13 @@ describe('Register spec', () => {
       },
     }).as('register');
 
-    // Fill out the registration form
     cy.get('input[formControlName=firstName]').type("John");
     cy.get('input[formControlName=lastName]').type("Doe");
     cy.get('input[formControlName=email]').type("test@example.com");
     cy.get('input[formControlName=password]').type(`${"test123"}{enter}{enter}`);
 
-    // Wait for the registration request to complete
     cy.wait('@register');
 
-    // Assert that the error handling in the component is working
     cy.get('.error').should('be.visible');
   });
 });

@@ -33,21 +33,17 @@ describe('Register spec', () => {
   });
 
   it('should register successfully', () => {
-    // Intercept the registration request
     cy.intercept('POST', '/api/auth/register', {
       statusCode: 200,
     }).as('register');
 
-    // Fill out the registration form
     cy.get('input[formControlName=firstName]').type("John");
     cy.get('input[formControlName=lastName]').type("Doe");
     cy.get('input[formControlName=email]').type("test@example.com");
     cy.get('input[formControlName=password]').type(`${"test123"}{enter}{enter}`);
 
-    // Wait for the registration request to complete
     cy.wait('@register');
 
-    // Assert that the URL includes '/login' after successful registration
     cy.url().should('include', '/login');
   });
 
@@ -61,7 +57,6 @@ describe('Register spec', () => {
   })
 
   it('should handle registration error (eg: email already used)', () => {
-    // Intercept the registration request with an error response
     cy.intercept('POST', '/api/auth/register', {
       statusCode: 500,
       body: {
@@ -69,16 +64,13 @@ describe('Register spec', () => {
       },
     }).as('register');
 
-    // Fill out the registration form
     cy.get('input[formControlName=firstName]').type("John");
     cy.get('input[formControlName=lastName]').type("Doe");
     cy.get('input[formControlName=email]').type("test@example.com");
     cy.get('input[formControlName=password]').type(`${"test123"}{enter}{enter}`);
 
-    // Wait for the registration request to complete
     cy.wait('@register');
 
-    // Assert that the error handling in the component is working
     cy.get('.error').should('be.visible');
   });
 });
@@ -306,7 +298,7 @@ describe("Full session's user experience as admin", () => {
       }],
     });
 
-    cy.get('.mat-card-actions button[ng-reflect-router-link="update,1"]').click();
+    cy.get('.mat-card-actions .ng-star-inserted').click();
     cy.url().should('include', '/sessions/update/1');
     cy.get('input[formControlName=name]').clear().type("cyTestUpdated");
     cy.get('textarea[formControlName=description]').clear().type("cyDscpUpdated");
@@ -347,10 +339,10 @@ describe("Full session's user experience as admin", () => {
     
     cy.intercept('GET', '/api/session', { body: [] });
     
-    cy.get('.mat-card-actions button[ng-reflect-router-link="detail,1"]').click();
+    cy.get('.mat-card-actions > :nth-child(1)').click();
     cy.url().should('include', '/sessions/detail/1');
-    cy.get('button[ng-reflect-color="warn"]').should('be.visible');
-    cy.get('button[ng-reflect-color="warn"]').click();
+    cy.get('.mat-warn').should('be.visible');
+    cy.get('.mat-warn').click();
     
     cy.url().should('include', '/sessions');
     cy.get('.mat-snack-bar-container').should('exist').contains('Session deleted !');
@@ -429,11 +421,11 @@ describe("Full session's user experience as user", () => {
       },
     });
 
-    cy.get('.mat-card-actions button[ng-reflect-router-link="detail,1"]').click();
+    cy.get('.mat-card-actions > :nth-child(1)').click();
     cy.url().should('include', '/sessions/detail/1');
     
-    cy.get('button[ng-reflect-color="primary"]').should('be.visible');
-    cy.get('button[ng-reflect-color="primary"]').click();
+    cy.get('.mat-primary.ng-star-inserted').should('be.visible');
+    cy.get('.mat-primary.ng-star-inserted').click();
     
     cy.intercept('GET', '/api/session/1', {
       body: {
@@ -464,91 +456,5 @@ describe("Full session's user experience as user", () => {
     });
 
   });
-
-  // it('should unparticipate to a session', () => {
-  //   cy.url().should('include', '/sessions');
-
-  //   cy.intercept('GET', '/api/session', {
-  //     body: [{
-  //       id: 1,
-  //       name: "cyTest",
-  //       date: "2024-02-04T00:00:00.000+00:00",
-  //       teacher_id: 1,
-  //       description: "cyDscp",
-  //       users: [1],
-  //       createdAt: "2024-02-04T00:00:00.000+00:00",
-  //       updatedAt: "2024-02-04T00:00:00.000+00:00"
-  //     }],
-  //   });
-
-  //   cy.intercept('GET', '/api/teacher/1', {
-  //     body: {
-  //       id: 1,
-  //       lastName: "DELAHAYE",
-  //       firstName: "Margot",
-  //       createdAt: "2024-01-12T13:36:53",
-  //       updatedAt: "2024-01-12T13:36:53",
-  //     },
-  //   });
-    
-  //   cy.intercept('GET', '/api/session/1', {
-  //     body: {
-  //       id: 1,
-  //       name: "cyTest",
-  //       date: "2024-02-04T00:00:00.000+00:00",
-  //       teacher_id: 1,
-  //       description: "cyDscp",
-  //       users: [1],
-  //       createdAt: "2024-02-04T00:00:00.000+00:00",
-  //       updatedAt: "2024-02-04T00:00:00.000+00:00"
-  //     },
-  //   });
-
-  //   cy.intercept('DELETE', '/api/session/1/participate/1', { body: {} });
-
-  //   cy.intercept('GET', '/api/teacher/1', {
-  //     body: {
-  //       id: 1,
-  //       lastName: "DELAHAYE",
-  //       firstName: "Margot",
-  //       createdAt: "2024-01-12T13:36:53",
-  //       updatedAt: "2024-01-12T13:36:53",
-  //     },
-  //   });
-
-  //   cy.get('.mat-card-actions button[ng-reflect-router-link="detail,1"]').click();
-  //   cy.url().should('include', '/sessions/detail/1');
-    
-  //   cy.get('button[ng-reflect-color="warn"]').should('be.visible');
-  //   cy.get('button[ng-reflect-color="warn"]').click();
-    
-  //   cy.intercept('GET', '/api/session/1', {
-  //     body: {
-  //       id: 1,
-  //       name: "cyTest",
-  //       date: "2024-02-04T00:00:00.000+00:00",
-  //       teacher_id: 1,
-  //       description: "cyDscp",
-  //       users: [],
-  //       createdAt: "2024-02-04T00:00:00.000+00:00",
-  //       updatedAt: "2024-02-04T00:00:00.000+00:00"
-  //     },
-  //   });
-
-  //   cy.get('.mat-card-title > div > div > .mat-button-base').click();
-
-  //   cy.intercept('GET', '/api/session', {
-  //     body: [{
-  //       id: 1,
-  //       name: "cyTest",
-  //       date: "2024-02-04T00:00:00.000+00:00",
-  //       teacher_id: 1,
-  //       description: "cyDscp",
-  //       users: [],
-  //       createdAt: "2024-02-04T00:00:00.000+00:00",
-  //       updatedAt: "2024-02-04T00:00:00.000+00:00"
-  //     }],
-  //   });
-  // });
   
 });
